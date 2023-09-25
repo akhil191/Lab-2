@@ -12,7 +12,14 @@ self-contained: true
 
 Load packages and data:
 
+install.packages('dplyr')
+
 ```{r load-pkg-data}
+install.packages('DataExplorer')
+install.packages('magrittr')
+install.packages('dplyr')
+install.packages('skimr')
+library(skimr)
 #| message: false
 the_tate <- readr::read_delim("data/the-tate-collection.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 the_tate_artists <- readr::read_csv("data/the-tate-artists.csv")
@@ -21,6 +28,18 @@ the_tate_artists <- readr::read_csv("data/the-tate-artists.csv")
 ## Exercises
 
 ### Exercise 1
+
+```{r}
+the_tate |> summary()
+```
+
+```{r}
+
+the_tate |>
+dplyr::summarise(unique=length(unique(artistId)),
+                 min_year= min(year,na.rm = TRUE), max_year=max(year,na.rm = TRUE),
+                 min_acquisittion= min(acquisitionYear,na.rm = TRUE), max_acqueisiton=max(acquisitionYear,na.rm=TRUE))
+```
 
 The `the_tate` dataset has \_\_\_ unique artists who worked from \_\_\_ to \_\_\_. The works were acquired between the years \_\_\_ and \_\_\_.
 
